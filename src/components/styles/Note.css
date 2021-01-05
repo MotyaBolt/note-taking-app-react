@@ -1,0 +1,74 @@
+.note {
+    height: 90px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    margin-top: 25px;
+    border: 1px solid rgb(161, 172, 218);
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.note:hover {
+  background-color: rgb(246, 244, 248);;
+}
+
+.content-div {
+    width: 85%;
+    height: 100%;
+}
+
+.delete-note {
+    width: 15%;
+    background-color: white;
+    outline: none;
+    border: none;
+    height: 100%;
+    cursor:  pointer;
+    color: rgb(189, 53, 53);
+    transition: all 0.3s ease;
+    border-left: 1px solid rgb(189, 53, 53);;
+}
+
+.delete-note:hover {
+    background-color: rgb(189, 53, 53);
+    color: white;
+}
+
+.fas {
+    font-size: 20px;
+}
+
+.note-title {
+    width: 100%;
+    font-size: 23px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 7px;
+    margin: 0px;
+}
+
+.note-content {
+    display: block;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    padding-left: 7px;
+    margin: 0px;
+    font-size: 16px;
+}
+
+.note-title-wrapper {
+    display: flex;
+    align-items: center;
+    height: 50%;
+}
+
+.note-content-wrapper {
+    display: flex;
+    align-items: center;
+    height: 50%;
+}

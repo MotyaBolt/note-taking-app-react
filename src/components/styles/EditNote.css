@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+.note-inputs {
+    width: 65%;
+    position: relative;
+    min-height: 705px;
+    background-color: rgb(250, 251, 249);
+}
+
+[data-placeholder]:empty:before {
+    content: attr(data-placeholder);
+    position: absolute;
+    color: rgb(100, 100, 100);
+    background-color: transparent;
+    cursor: text;
+}
+
+.title {
+    font-size: 32px;
+    min-height: 100px;
+    max-height: 300px;
+    overflow: scroll;
+    padding: 8px;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+}
+
+.text {
+    font-size: 22px;
+    min-height: 300px;
+    max-height: 500px;
+    overflow: scroll;
+    padding: 8px;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+}
+
+.title::-webkit-scrollbar {
+    display: none;
+}
+
+.text::-webkit-scrollbar {
+    display: none;
+}
+
+.input {
+    outline: none;
+}
+
+.start-display {
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding-top: 300px;
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    min-height: 420px;
+    z-index: 1;
+}
+
+.start-display-after {
+    display: none;
+}
