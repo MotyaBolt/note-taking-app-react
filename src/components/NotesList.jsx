@@ -16,7 +16,7 @@ class NotesList extends React.Component {
                     </div>
                     {this.props.notes.map((item, index) => {
                         return (
-                            <Note onClick={() => {this.props.selectNote(item[0], item[1])}} key={index} title={item[0]} content={item[1]} deleteNote={() =>  {this.props.deleteNote(item[0], item[1])}}/>
+                            <Note onClick={() => {this.props.selectNote(item[0], item[1])}} key={index} title={item[0]} content={item[1]} deleteNote={() => {this.props.deleteNote(item[0], item[1])}}/>
                         )
                     })}
                 </div>

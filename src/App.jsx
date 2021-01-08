@@ -11,18 +11,13 @@ class App extends React.Component {
       startNoteTitle: '',
       currentNoteTitle: '',
       currentNoteText: '',
-      getNoteTitleValue: '',
-      getNoteTextValue: '',
       notesStatus: 'Your notes will be here',
-      onNoteClicked: false,
-      startTyping: false
-    }
+      onNoteClicked: false
+    };
     this.createNewNote = this.createNewNote.bind(this);
     this.getValue = this.getValue.bind(this);
     this.addNewNote = this.addNewNote.bind(this);
     this.selectNote = this.selectNote.bind(this);
-    this.getNoteTitle = this.getNoteTitle.bind(this);
-    this.getNoteText = this.getNoteText.bind(this);
     this.onTitleBlur = this.onTitleBlur.bind(this);
     this.onTextBlur = this.onTextBlur.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
@@ -46,67 +41,39 @@ class App extends React.Component {
         notes: [[[this.state.startNoteTitle], []], ...this.state.notes],
         startNoteTitle: '',
         newNoteClicked: false,
-        notesStatus: 'Select a note',
-        startTyping: false
-    })
+        notesStatus: 'Select a note'
+      })
     }
   };
   
   selectNote (notetitl, notetxt) {
-    this.setState ({
+    this.setState ({ 
       currentNoteTitle: notetitl,
       currentNoteText: notetxt,
       onNoteClicked: true
+    });
+  };
+
+  onTitleBlur (e) {
+    this.state.notes.map((note) => {
+      if(note[0] === this.state.currentNoteTitle) {
+        note[0] = [e.target.innerText]
+        this.setState ({
+          currentNoteTitle: note[0]
+        });
+      }
     })
-    console.log(notetitl, notetxt)
   };
 
-  getNoteTitle (event) {
-      this.setState ({
-        getNoteTitleValue: event.target.innerText,
-        startTyping: true
-      })
-  };
-
-  getNoteText (event) {
-     this.setState ({
-       getNoteTextValue: event.target.innerText,
-       startTyping: true
-     })
-  };
-
-  onTitleBlur () {
-      if(this.state.getNoteTitleValue !== '') {
-      this.state.notes.map(item => {
-        if(item[0] === this.state.currentNoteTitle) {
-          item[0] = this.state.getNoteTitleValue
-          this.setState({
-            currentNoteTitle: item[0], 
-            getNoteTitleValue: ''
-            })
-          }
-        })
-      }
-      else {
-        console.log('here')
-      }
-  };
-
-  onTextBlur () {
-    if(this.state.getNoteTextValue !== '' ) {
-      this.state.notes.map(item => {
-        if(item[1] === this.state.currentNoteText) {
-          item[1] = this.state.getNoteTextValue
-          this.setState({
-            currentNoteText: item[1],
-            getNoteTextValue: ''
-          })
-        }
-      })
-    }
-    else {
-      console.log('here')
-    }
+  onTextBlur (e) {
+   this.state.notes.map((note) => {
+     if(note[1] === this.state.currentNoteText) {
+       note[1] = [e.target.innerText]
+       this.setState ({
+         currentNoteText: note[1]
+       })
+     }
+   })
   };
   
   deleteNote (toDeleteTitle, toDeleteText) {
@@ -115,7 +82,7 @@ class App extends React.Component {
       notes: onDeleteNotes,
       currentNoteText: '',
       currentNoteTitle: '',
-      onNoteClicked: false
+      onNoteClicked: false,
     })
     if(this.state.notes.length <= 1) {
       this.setState ({
@@ -128,7 +95,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <NotesList deleteNote={this.deleteNote} selectNote={this.selectNote} value={this.state.startNoteTitle}  notes={this.state.notes} addNoteEvent={this.addNewNote} getValue={this.getValue} newNoteClicked={this.state.newNoteClicked} createNoteEvent={this.createNewNote}/>
-        <EditNote  onNoteClick={this.state.onNoteClicked} status={this.state.notesStatus} onTitleBlur={this.onTitleBlur} onTextBlur={this.onTextBlur} getNoteTitle={this.getNoteTitle} getNoteText={this.getNoteText} titleContent={this.state.currentNoteTitle} textContent={this.state.currentNoteText} selectNote={this.selectNote}/>
+        <EditNote  onNoteClick={this.state.onNoteClicked} status={this.state.notesStatus} onTitleBlur={this.onTitleBlur} onTextBlur={this.onTextBlur} getNoteTitle={this.getNoteTitle} getNoteText={this.getNoteText} titleContent={this.state.currentNoteTitle[0]} textContent={this.state.currentNoteText[0]} selectNote={this.selectNote}/>
       </div>
     )
   }

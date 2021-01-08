@@ -8,7 +8,7 @@ class Note extends React.Component {
     render () {
         return (
             <div  className="note">
-                <div onClick={this.props.onClick} className="content-div">
+                <div onClick={this.props.onClick}  className="content-div">
                     <div className="note-title-wrapper"><h3 className="note-title">{this.props.title}</h3></div>
                     <div className="note-content-wrapper"><p className="note-content">{this.props.content}</p></div>
                 </div>
