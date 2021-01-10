@@ -6,8 +6,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newNoteClicked: false,
       notes: [],
+      newNoteClicked: false,
       startNoteTitle: '',
       currentNoteTitle: '',
       currentNoteText: '',
@@ -21,13 +21,15 @@ class App extends React.Component {
     this.onTitleBlur = this.onTitleBlur.bind(this);
     this.onTextBlur = this.onTextBlur.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+    this.blockEnter = this.blockEnter.bind(this);
+    this.enterAddNew = this.enterAddNew.bind(this);
   }
 
   createNewNote () {
     this.setState ({
       newNoteClicked: true
     })
-  };
+  }
 
   getValue (event) {
     this.setState ({
@@ -37,6 +39,17 @@ class App extends React.Component {
 
   addNewNote () {
     if(this.state.startNoteTitle !== '') {
+      this.setState ({
+        notes: [[[this.state.startNoteTitle], []], ...this.state.notes],
+        startNoteTitle: '',
+        newNoteClicked: false,
+        notesStatus: 'Select a note'
+      })
+    }
+  };
+
+  enterAddNew (e) {
+    if(this.state.startNoteTitle !== '' && e.keyCode === 13) {
       this.setState ({
         notes: [[[this.state.startNoteTitle], []], ...this.state.notes],
         startNoteTitle: '',
@@ -68,10 +81,10 @@ class App extends React.Component {
   onTextBlur (e) {
    this.state.notes.map((note) => {
      if(note[1] === this.state.currentNoteText) {
-       note[1] = [e.target.innerText]
-       this.setState ({
-         currentNoteText: note[1]
-       })
+       note[1] = [e.target.innerHTML]
+        this.setState ({
+          currentNoteText: note[1]
+        })
      }
    })
   };
@@ -91,11 +104,18 @@ class App extends React.Component {
     }
   };
 
+  
+  blockEnter (e) { 
+    if(e.keyCode === 13) {
+      e.preventDefault();
+    }
+  }
+
   render () {
     return (
       <div className="app">
-        <NotesList deleteNote={this.deleteNote} selectNote={this.selectNote} value={this.state.startNoteTitle}  notes={this.state.notes} addNoteEvent={this.addNewNote} getValue={this.getValue} newNoteClicked={this.state.newNoteClicked} createNoteEvent={this.createNewNote}/>
-        <EditNote  onNoteClick={this.state.onNoteClicked} status={this.state.notesStatus} onTitleBlur={this.onTitleBlur} onTextBlur={this.onTextBlur} getNoteTitle={this.getNoteTitle} getNoteText={this.getNoteText} titleContent={this.state.currentNoteTitle[0]} textContent={this.state.currentNoteText[0]} selectNote={this.selectNote}/>
+        <NotesList onKeyDown={this.enterAddNew} deleteNote={this.deleteNote} selectNote={this.selectNote} value={this.state.startNoteTitle}  notes={this.state.notes} createNoteEvent={this.createNewNote} getValue={this.getValue}  addNoteEvent={this.addNewNote} newNoteClicked={this.state.newNoteClicked}/>
+        <EditNote  onKeyDown={this.blockEnter} onNoteClick={this.state.onNoteClicked} status={this.state.notesStatus} onTitleBlur={this.onTitleBlur} onTextBlur={this.onTextBlur} getNoteTitle={this.getNoteTitle} getNoteText={this.getNoteText} titleContent={this.state.currentNoteTitle[0]} textContent={this.state.currentNoteText[0]} selectNote={this.selectNote}/>
       </div>
     )
   }

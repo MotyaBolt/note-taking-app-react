@@ -4,14 +4,15 @@ import './styles/NotesList.css';
 class NotesList extends React.Component {
     constructor(props) {
         super(props);
+        this.inputRef = React.createRef();
     }
     render () {
         return (
             <div className="notes-list">
-                <div className="create-new">
-                    <button onClick={this.props.createNoteEvent} className="new-note-btn">New Note</button>
+                <div onKeyDown={this.props.onKeyDown} className="create-new">
+                    <button onFocus={() => {setTimeout(() => this.inputRef.current.focus(), 30)}} onClick={this.props.createNoteEvent} className="new-note-btn">New Note</button>
                     <div className={this.props.newNoteClicked === true ? "add-note-wrapper-after" : "add-note-wrapper"}> 
-                        <input value={this.props.value} onChange={this.props.getValue} placeholder='Enter title' className="note-title-input"></input>
+                    <input ref={this.inputRef} value={this.props.value} onChange={this.props.getValue} placeholder='Enter title' className="note-title-input"/>
                         <button onClick={this.props.addNoteEvent} className="add-note">Add</button>
                     </div>
                     {this.props.notes.map((item, index) => {
