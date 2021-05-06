@@ -12,7 +12,7 @@ class App extends React.Component {
       currentNoteTitle: '',
       currentNoteText: '',
       notesStatus: 'Your notes will be here',
-      onNoteClicked: false
+      onNoteClicked: false,
     };
     this.createNewNote = this.createNewNote.bind(this);
     this.getValue = this.getValue.bind(this);
@@ -25,99 +25,121 @@ class App extends React.Component {
     this.enterAddNew = this.enterAddNew.bind(this);
   }
 
-  createNewNote () {
-    this.setState ({
-      newNoteClicked: true
-    })
+  createNewNote() {
+    this.setState({
+      newNoteClicked: true,
+    });
   }
 
-  getValue (event) {
-    this.setState ({
-      startNoteTitle: event.target.value
-    })
-  };
+  getValue(event) {
+    this.setState({
+      startNoteTitle: event.target.value,
+    });
+  }
 
-  addNewNote () {
-    if(this.state.startNoteTitle !== '') {
-      this.setState ({
+  addNewNote() {
+    if (this.state.startNoteTitle !== '') {
+      this.setState({
         notes: [[[this.state.startNoteTitle], []], ...this.state.notes],
         startNoteTitle: '',
         newNoteClicked: false,
-        notesStatus: 'Select a note'
-      })
+        notesStatus: 'Select a note',
+      });
     }
-  };
+  }
 
-  enterAddNew (e) {
-    if(this.state.startNoteTitle !== '' && e.keyCode === 13) {
-      this.setState ({
+  enterAddNew(e) {
+    if (this.state.startNoteTitle !== '' && e.keyCode === 13) {
+      this.setState({
         notes: [[[this.state.startNoteTitle], []], ...this.state.notes],
         startNoteTitle: '',
         newNoteClicked: false,
-        notesStatus: 'Select a note'
-      })
+        notesStatus: 'Select a note',
+      });
     }
-  };
-  
-  selectNote (notetitl, notetxt) {
-    this.setState ({ 
+  }
+
+  selectNote(notetitl, notetxt) {
+    this.setState({
       currentNoteTitle: notetitl,
       currentNoteText: notetxt,
-      onNoteClicked: true
+      onNoteClicked: true,
     });
-  };
+  }
 
-  onTitleBlur (e) {
+  onTitleBlur(e) {
     this.state.notes.map((note) => {
-      if(note[0] === this.state.currentNoteTitle) {
-        note[0] = [e.target.innerText]
-        this.setState ({
-          currentNoteTitle: note[0]
+      if (note[0] === this.state.currentNoteTitle) {
+        note[0] = [e.target.innerText];
+        this.setState({
+          currentNoteTitle: note[0],
         });
       }
-    })
-  };
+    });
+  }
 
-  onTextBlur (e) {
-   this.state.notes.map((note) => {
-     if(note[1] === this.state.currentNoteText) {
-       note[1] = [e.target.innerHTML]
-        this.setState ({
-          currentNoteText: note[1]
-        })
-     }
-   })
-  };
-  
-  deleteNote (toDeleteTitle, toDeleteText) {
-    let onDeleteNotes = this.state.notes.filter(item => item[0] !== toDeleteTitle && item[1] !== toDeleteText)
-    this.setState ({ 
+  onTextBlur(e) {
+    this.state.notes.map((note) => {
+      if (note[1] === this.state.currentNoteText) {
+        note[1] = [e.target.innerHTML];
+        this.setState({
+          currentNoteText: note[1],
+        });
+      }
+    });
+  }
+
+  deleteNote(toDeleteTitle, toDeleteText) {
+    let onDeleteNotes = this.state.notes.filter(
+      (item) => item[0] !== toDeleteTitle && item[1] !== toDeleteText
+    );
+    this.setState({
       notes: onDeleteNotes,
       currentNoteText: '',
       currentNoteTitle: '',
       onNoteClicked: false,
-    })
-    if(this.state.notes.length <= 1) {
-      this.setState ({
-        notesStatus: 'Your notes will be here'
-      })
+    });
+    if (this.state.notes.length <= 1) {
+      this.setState({
+        notesStatus: 'Your notes will be here',
+      });
     }
-  };
+  }
 
-  
-  blockEnter (e) { 
-    if(e.keyCode === 13) {
+  blockEnter(e) {
+    if (e.keyCode === 13) {
       e.preventDefault();
     }
   }
 
-  render () {
+  render() {
     return (
       <div className="app">
-        <NotesList onKeyDown={this.enterAddNew} deleteNote={this.deleteNote} selectNote={this.selectNote} value={this.state.startNoteTitle}  notes={this.state.notes} createNoteEvent={this.createNewNote} getValue={this.getValue}  addNoteEvent={this.addNewNote} newNoteClicked={this.state.newNoteClicked}/>
-        <EditNote  onKeyDown={this.blockEnter} onNoteClick={this.state.onNoteClicked} status={this.state.notesStatus} onTitleBlur={this.onTitleBlur} onTextBlur={this.onTextBlur} getNoteTitle={this.getNoteTitle} getNoteText={this.getNoteText} titleContent={this.state.currentNoteTitle[0]} textContent={this.state.currentNoteText[0]} selectNote={this.selectNote}/>
+        <NotesList
+          onKeyDown={this.enterAddNew}
+          deleteNote={this.deleteNote}
+          selectNote={this.selectNote}
+          value={this.state.startNoteTitle}
+          notes={this.state.notes}
+          createNoteEvent={this.createNewNote}
+          getValue={this.getValue}
+          addNoteEvent={this.addNewNote}
+          newNoteClicked={this.state.newNoteClicked}
+        />
+        <EditNote
+          onKeyDown={this.blockEnter}
+          onNoteClick={this.state.onNoteClicked}
+          status={this.state.notesStatus}
+          onTitleBlur={this.onTitleBlur}
+          onTextBlur={this.onTextBlur}
+          getNoteTitle={this.getNoteTitle}
+          getNoteText={this.getNoteText}
+          titleContent={this.state.currentNoteTitle[0]}
+          textContent={this.state.currentNoteText[0]}
+          selectNote={this.selectNote}
+        />
       </div>
-    )
+    );
   }
 }
 export default App;
